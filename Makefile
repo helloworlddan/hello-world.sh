@@ -1,3 +1,6 @@
+local:
+	hugo server -D -s site
+
 infrastructure:
 	cd infrastructure; sceptre launch-stack stamer page
 
