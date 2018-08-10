@@ -1,0 +1,56 @@
+baseURL = "https://hello-world.sh"
+languageCode = "en-us"
+title = "hello-world.sh"
+theme = "coder"
+
+languagecode = "en" # The site’s language code used to generate RSS.
+defaultcontentlanguage = "en" # The default content language.
+
+paginate = 10 # Default number of pages per page in pagination.
+canonifyurls = true # Enable to turn relative URLs into absolute.
+
+pygmentsstyle = "b2" # Color-theme or style for syntax highlighting.
+pygmentscodefences = true # Enable code fence background highlighting.
+pygmentscodefencesguesssyntax = true # Enable syntax guessing for code fences without specified language.
+
+[params] # theme parameters
+    author = "Daniel Stamer" # Author's name.
+    info = "Everything as Code" # Author's job title or info.
+    description = "Daniel's brain dump" # Site description.
+    keywords = "cloud,architecture,automation" # Site keywords.
+    avatarurl = "images/avatar.png" # Contain the path of the optional avatar in the static folder.
+
+    footercontent = "Coffee made me create this site." # Add footer content
+
+    # Whether you want to hide copyright and credits in the footer.
+    hideCredits = true
+    hideCopyright = false
+
+    # Custom CSS
+    custom_css = []
+
+    # RTL support
+    rtl = false
+
+    # Multilanguage mode
+    langseparator = "|" # Separates menus from language selectors when site is multilingual.
+
+# Social links
+[[params.social]]
+    name = "Github"
+    weight = 1
+    url = "https://github.com/planchao/"
+[[params.social]]
+    name = "Twitter"
+    weight = 2
+    url = "https://twitter.com/dan_ice_man/"
+
+# Menu links
+[[menu.main]]
+    name = "Posts"
+    weight = 1
+    url  = "/posts/"
+[[menu.main]]
+    name = "About"
+    weight = 2
+    url = "/about/"

@@ -1,0 +1,8 @@
+template_path: templates/page.yaml
+
+parameters:
+  DomainName: hello-world.sh
+  HostedZoneName: hello-world.sh
+  Certificate: arn:aws:acm:us-east-1:772870222256:certificate/a009e2a4-df24-47f4-8249-05f59a6067f8
+
+
