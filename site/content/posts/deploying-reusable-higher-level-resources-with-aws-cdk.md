@@ -1,6 +1,6 @@
 +++ 
 draft = false
-date = 2018-08-09T20:00:00+02:00
+date = 2018-08-10T18:00:00+02:00
 title = "Deploying reusable, higher-level resources with AWS-CDK"
 slug = "" 
 tags = []
@@ -23,7 +23,7 @@ render the higher-level definitions into CloudFormation templates. A developer
 can also choose to generate a diff of resources to create or update and
 directly deploy resource definitions to the cloud. The CDK will even take care
 of generating additional CloudFormation resource to supply the necessary
-deployment infrastructure (e.g., a S3 bucket to hold zipped Lambda functions).
+deployment infrastructure (e.g.: a S3 bucket to hold zipped Lambda functions).
 
 "But wait!", could you say now, "Isn't that what Troposhere is for?!". Well,
 yes and no. To some extend
@@ -191,7 +191,7 @@ functions. The CDK has automatically done this for us in the background!
 
 The AWS CDK abstracts AWS resource definitions in a nice and ergonomic way.
 Defining sets of interlinked resources has never been easier. The CDK delivers
-a fully-fledged toolkit for deploying resources and requires much less
+a complete toolkit for deploying resources and requires much less
 knowledge of the intricate details within CloudFormation.
 
 Personally, I will try to use it more and more. I'd love to see support for
