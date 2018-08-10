@@ -1,6 +1,7 @@
-### About me
+### Hi there!
 
-I am a blah blah blah.
+My name is Daniel and I am a software engineer that works mainly with
+automation and infrastructure as code. I have put up this site to talk about
+cloud stuff, I guess.
 
 
-#### Imprint

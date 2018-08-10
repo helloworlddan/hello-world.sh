@@ -4,11 +4,10 @@ Description: >
 Parameters:
   DomainName:
     Type: String
-    Description: Name of the domain to point to the landingpages content
+    Description: Name of the domain to point to the page content
 
   HostedZoneName:
     Type: String
-    Default: platform.vwfs.io.
     Description: Name of the target hosted zone
 
   Certificate:
@@ -81,7 +80,7 @@ Resources:
     Properties:
       Type: A 
       Name: !Ref DomainName 
-      Comment: Alias for MPS Landingpages
+      Comment: Alias for Page
       HostedZoneName: !Ref HostedZoneName
       AliasTarget:
         HostedZoneId: Z2FDTNDATAQYW2 # Constant HostedZoneId of CloudFront
