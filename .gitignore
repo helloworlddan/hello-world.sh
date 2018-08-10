@@ -1,1 +1,3 @@
 site/themes/coder
+.DS_Store
+site/public

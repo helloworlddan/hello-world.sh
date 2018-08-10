@@ -7,7 +7,7 @@ tags = []
 categories = ["AWS", "IAC", "CDK", "TypeScript", "SNS", "Lambda", "CloudFormation"]
 +++
 
-### Introducing the AWS-SDK
+### Introducing the AWS-CDK
 
 AWS recently released the [Cloud Development
 Kit (CDK)](https://github.com/awslabs/aws-cdk). According to the authors of the

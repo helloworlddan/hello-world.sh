@@ -7,7 +7,7 @@ languagecode = "en" # The site’s language code used to generate RSS.
 defaultcontentlanguage = "en" # The default content language.
 
 paginate = 10 # Default number of pages per page in pagination.
-canonifyurls = true # Enable to turn relative URLs into absolute.
+canonifyURLs = true # Enable to turn relative URLs into absolute.
 
 pygmentsstyle = "b2" # Color-theme or style for syntax highlighting.
 pygmentscodefences = true # Enable code fence background highlighting.
@@ -16,7 +16,7 @@ pygmentscodefencesguesssyntax = true # Enable syntax guessing for code fences wi
 [params] # theme parameters
     author = "Daniel Stamer" # Author's name.
     info = "Everything as Code" # Author's job title or info.
-    description = "Daniel's brain dump" # Site description.
+    description = "Daniel talks about cloud stuff" # Site description.
     keywords = "cloud,architecture,automation,devops,infrastructure-as-code" # Site keywords.
     avatarurl = "images/avatar.png" # Contain the path of the optional avatar in the static folder.
 
@@ -49,8 +49,8 @@ pygmentscodefencesguesssyntax = true # Enable syntax guessing for code fences wi
 [[menu.main]]
     name = "Posts"
     weight = 1
-    url  = "/posts/"
+    url  = "/posts/index.html"
 [[menu.main]]
     name = "About"
     weight = 2
-    url = "/about/"
+    url = "/about/index.html"

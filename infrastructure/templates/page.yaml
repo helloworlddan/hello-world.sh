@@ -36,12 +36,18 @@ Resources:
             Effect: Allow
             Principal:
               CanonicalUser: !GetAtt OAI.S3CanonicalUserId
+          - Action:
+            - s3:ListBucket
+            Resource: !Join [ "", [ "arn:aws:s3:::", !Ref Bucket] ]
+            Effect: Allow
+            Principal:
+              CanonicalUser: !GetAtt OAI.S3CanonicalUserId
 
   OAI:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: OAI for CloudFront to access landingpages bucket
+        Comment: OAI for CloudFront to access page bucket
 
   CDN:
     Type: AWS::CloudFront::Distribution

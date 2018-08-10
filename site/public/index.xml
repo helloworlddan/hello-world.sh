@@ -6,9 +6,20 @@
     <description>Recent content on hello-world.sh</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Thu, 09 Aug 2018 20:00:00 +0200</lastBuildDate>
     
 	<atom:link href="https://hello-world.sh/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Deploying reusable, higher-level resources with AWS-CDK</title>
+      <link>https://hello-world.sh/posts/deploying-reusable-higher-level-resources-with-aws-cdk/</link>
+      <pubDate>Thu, 09 Aug 2018 20:00:00 +0200</pubDate>
+      
+      <guid>https://hello-world.sh/posts/deploying-reusable-higher-level-resources-with-aws-cdk/</guid>
+      <description>Introducing the AWS-CDK AWS recently released the Cloud Development Kit (CDK). According to the authors of the CDK, it is an infrastructure modeling framework that allows you to define your cloud resources using an imperative programming interface.
+The AWS CDK is basically a wrapper around CloudFormation, which abstracts CloudFormation definitions of AWS resources into an object-oriented library. This allows developers to define higher-level abstractions of resources, which can easily be reused.</description>
+    </item>
     
     <item>
       <title></title>
@@ -16,8 +27,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hello-world.sh/about/</guid>
-      <description> About me I am a blah blah blah.
-Imprint </description>
+      <description>Hi there! My name is Daniel and I am a software engineer that works mainly with automation and infrastructure as code. I have put up this site to talk about cloud stuff, I guess.
+Hints All views and opinions expressed on this site are entirely my own.</description>
     </item>
     
   </channel>
