@@ -85,7 +85,7 @@ $ npm i -g aws-cdk
 ```
 
 We are going to setup a project directory and initialize it with the CDK. I am
-choosing TypeScript to built this project.
+choosing TypeScript to build this project.
 ```bash
 $ mkdir cdk-setup-service
 $ cd cdk-setup-service
