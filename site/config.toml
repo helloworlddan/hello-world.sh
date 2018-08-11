@@ -23,8 +23,10 @@ pygmentscodefencesguesssyntax = true # Enable syntax guessing for code fences wi
     footercontent = "coffee made me create this site" # Add footer content
 
     # Whether you want to hide copyright and credits in the footer.
-    hideCredits = true
+    hideCredits = false
     hideCopyright = false
+
+    pgpKeyId = "EDAC0E3FCB1B3FEB"
 
     # Custom CSS
     custom_css = []
@@ -44,6 +46,10 @@ pygmentscodefencesguesssyntax = true # Enable syntax guessing for code fences wi
     name = "Twitter"
     weight = 2
     url = "https://twitter.com/dan_ice_man/"
+[[params.social]]
+    name = "Mail"
+    weight = 2
+    url = "mailto:dan@hello-world.sh"
 
 # Menu links
 [[menu.main]]
