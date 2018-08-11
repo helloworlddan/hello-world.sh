@@ -1,8 +1,8 @@
-+++ 
++++
 draft = false
 date = 2018-08-10T18:00:00+02:00
 title = "Deploying reusable, higher-level resources with AWS-CDK"
-slug = "" 
+slug = ""
 tags = []
 categories = ["AWS", "IAC", "CDK", "TypeScript", "SNS", "Lambda", "CloudFormation"]
 +++
@@ -57,14 +57,14 @@ channels).
 
 Our application was holding the layout of the organization in some database and
 every time something in the organization configuration would change (e.g.: a new
-development team gets added), the automation had to run off and do it's job. 
+development team gets added), the automation had to run off and do it's job.
 
 The following shows an architecture that relies on SNS and Lambda (or
 StepFunctions) to do run a multitude of configuration tasks. Configurations
 are divided up into two categories: Organization configuration is holding
 configuration that is application-agnostic, like the layout of all development
 teams. The second configuration category would be application-specific. This
-could be something like setting up federation for an application. 
+could be something like setting up federation for an application.
 
 ![Use-case architecture layout](/images/deploying-reusable-higher-level-resources/arch.png)
 
@@ -157,7 +157,7 @@ work.
 
 Firstly, we need to transpile our TypeScript code to JavaScript.
 ```
-$ npm run build 
+$ npm run build
 ```
 
 Okay, now since our deployment requires the usage of assets (zipped Lambda
