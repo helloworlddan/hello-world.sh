@@ -1,3 +1,5 @@
+all: infrastructure publish
+
 local:
 	hugo server -D -s site
 
