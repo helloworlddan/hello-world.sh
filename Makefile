@@ -8,6 +8,6 @@ infrastructure:
 
 publish:
 	hugo -s site
-	cd site/public && aws s3 sync . s3://hello-world-stamer-page-bucket-mzwqo0v2xt1t			
+	cd site/public && aws s3 sync . "s3://$(shell /usr/local/bin/sceptre --output json --dir infrastructure describe-stack-outputs stamer page | jq -r ".[] | select(.OutputKey==\"Bucket\").OutputValue")"
 
 .PHONY: infrastructure
