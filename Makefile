@@ -1,3 +1,5 @@
+BUCKET := $(shell /usr/local/bin/sceptre --output json --dir infrastructure describe-stack-outputs stamer page | jq -r ".[] | select(.OutputKey==\"Bucket\").OutputValue")
+
 all: infrastructure publish
 
 local:
@@ -8,6 +10,10 @@ infrastructure:
 
 publish:
 	hugo -s site
-	cd site/public && aws s3 sync . "s3://$(shell /usr/local/bin/sceptre --output json --dir infrastructure describe-stack-outputs stamer page | jq -r ".[] | select(.OutputKey==\"Bucket\").OutputValue")"
+	cd site/public && aws s3 sync . "s3://${BUCKET}"
 
-.PHONY: infrastructure
+clean:
+	rm -rf site/public
+	aws s3 rm --recursive "s3://${BUCKET}/"
+
+.PHONY: all local infrastructure publish clean
