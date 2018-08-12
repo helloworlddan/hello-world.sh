@@ -23,7 +23,7 @@ Resources:
           Value: !Join [ "", [ "https://", !Ref DomainName ] ]
       WebsiteConfiguration:
         IndexDocument: index.html
-  
+
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
@@ -55,7 +55,7 @@ Resources:
           Id: landingpages-bucket
           S3OriginConfig:
             OriginAccessIdentity: !Join [ "/", [ "origin-access-identity", "cloudfront", !Ref OAI ] ]
-        Enabled: true 
+        Enabled: true
         Comment: CDN
         DefaultRootObject: index.html
         Aliases:
@@ -78,8 +78,8 @@ Resources:
   DNS:
     Type: AWS::Route53::RecordSet
     Properties:
-      Type: A 
-      Name: !Ref DomainName 
+      Type: A
+      Name: !Ref DomainName
       Comment: Alias for Page
       HostedZoneName: !Ref HostedZoneName
       AliasTarget:
