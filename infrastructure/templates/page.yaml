@@ -36,12 +36,6 @@ Resources:
             Effect: Allow
             Principal:
               CanonicalUser: !GetAtt OAI.S3CanonicalUserId
-          - Action:
-            - s3:ListBucket
-            Resource: !Join [ "", [ "arn:aws:s3:::", !Ref Bucket] ]
-            Effect: Allow
-            Principal:
-              CanonicalUser: !GetAtt OAI.S3CanonicalUserId
 
   OAI:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity

@@ -1,18 +1,23 @@
+BUCKET := $(shell /usr/local/bin/sceptre --output json --dir infrastructure describe-stack-outputs stamer page | jq -r ".[] | select(.OutputKey==\"Bucket\").OutputValue")
+
+all: infrastructure publish
+
 post:
-	cd site && hugo new "posts/${title}.md"
+	hugo -s site new "posts/${title}.md"
 	mkdir -p "site/static/images/${title}"
 
 local:
-	hugo server -D -s site
+	hugo -s site server -D
 
 infrastructure:
-	cd infrastructure; sceptre launch-stack stamer page
+	sceptre --dir infrastructure launch-stack stamer page
 
 publish:
 	hugo -s site
-	cd site/public && aws s3 sync . s3://hello-world-stamer-page-bucket-mzwqo0v2xt1t			
+	cd site/public && aws s3 sync . "s3://${BUCKET}"
 
 clean:
 	rm -rf site/public
+	aws s3 rm --recursive "s3://${BUCKET}/"
 
-.PHONY: infrastructure
+.PHONY: all local infrastructure publish clean post
