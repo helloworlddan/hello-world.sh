@@ -28,12 +28,12 @@ deployment infrastructure (e.g.: a S3 bucket to hold zipped Lambda functions).
 "But wait!", could you say now, "Isn't that what Troposhere is for?!". Well,
 yes and no. To some extend
 [Troposphere](https://github.com/cloudtools/troposphere) (and I'm sure there
-other libraries for other languages do the same) enables developers to define
-CloudFormation templates dynamically from with in a Python environment.
-However, Troposphere only does half of what the AWS CDK does. Troposphere aims
-more at providing a dynamic way of rendering CloudFormation templates. It
-does not provide deployment tooling and it does not provide abstraction of
-resources as high as the CDK.
+are other libraries for other languages which do the same) enables developers
+to define CloudFormation templates dynamically from with in a Python
+environment. However, Troposphere only does half of what the AWS CDK does.
+Troposphere aims more at providing a dynamic way of rendering CloudFormation
+templates. It does not provide deployment tooling and it does not provide
+abstraction of resources as high as the CDK.
 
 Currently, the AWS CDK ships support for Java and TypeScript. The latter will
 be transpiled into JavaScript before being rendered into CloudFormation.
@@ -44,7 +44,7 @@ I am going to quickly lay out a real-world use-case to demonstrate usage of the
 AWS CDK.
 
 A recent project was about governing a large corporate AWS estate. The top two
-focuses of the project was governance of AWS accounts for multiple development
+focuses of the project were governance of AWS accounts for multiple development
 teams and managing additional development tools on top of the AWS estate.
 Requirements for heavy automation led us to build an Account Vending Machine
 (AVM) that would automatically configure AWS accounts for development teams. To
@@ -79,8 +79,10 @@ It shouldn't be hard to detect the obvious pattern in the architecture.
 
 I am assuming that you have `npm` installed.
 
-Let's install the AWS CDK!
+Let's add some node packages first!
 ```
+# NOTE This will only add a few CDK modules. To add specific modules, run:
+# $ npm i -g @aws-cdk/aws-lambda
 $ npm i -g aws-cdk
 ```
 
@@ -100,7 +102,7 @@ and an SQS queue.
 
 I am creating a class that aims at encapsulating the pattern that is obviously
 repeating in the architecture. We need one Lambda function per application to
-compute changes and update to our organizational layout and one Lambda function
+compute changes and updates to our organizational layout and one Lambda function
 to process all the application-specific updates. Additionally, we need to setup
 a bunch of SNS topics and subscriptions to do all the event-based plumbing to
 make the whole thing work.
@@ -151,9 +153,8 @@ Slack.
 
 ### Deploying to the cloud
 
-Okay, let's get cracking and deploy our project to the cloud. After we make
-sure that our current environment has valid AWS credentials, we can get to
-work.
+Let's get cracking and deploy our project to the cloud. After we make sure that
+our current environment has valid AWS credentials, we can get to work.
 
 Firstly, we need to transpile our TypeScript code to JavaScript.
 ```
@@ -181,12 +182,13 @@ After we read through the proposed changes we can go ahead and deploy.
 $ cdk deploy
 ```
 
-CloudFormation will now go ahead and attempt to create our infrastructure. The
-magical part here is that the CDK is smart enough to add in additional
-resources automatically. If we were to build this with pure CloudFormation or
+CloudFormation will now attempt to create our infrastructure. The magical part
+here is that the CDK is smart enough to add in additional resources
+automatically. If we were to build this with pure CloudFormation or
 Troposphere, we would have to create additional resources like a
 `AWS::Lambda::Permission` to enable the SNS topic to actually invoke the Lambda
-functions. The CDK has automatically done this for us in the background!
+functions. The CDK has automatically done this for us in the background! To
+verify this, check the output of `cdk diff` again.
 
 
 ### Conclusion
