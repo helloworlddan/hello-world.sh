@@ -25,9 +25,6 @@ But where is AWS? Only with full cost additional services Beanstalk, opsworks...
 
 AWS Fargate is a new launch type for ECS.
 
-#### A Sample Task on Fargate
-
-
 
 #### Networking
 
@@ -45,6 +42,9 @@ Compare developer cost vs. time-saving of Fargate.
 
 ### Quickstart with Fargate
 
+Code gist here
+
+role/ecsTaskExecutionRole && service-linked role may need to be created by hand (Web UI)
 
 ### Conclusion
 
