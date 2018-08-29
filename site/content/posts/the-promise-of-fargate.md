@@ -9,22 +9,25 @@ categories = []
 
 ### Just run this container for me, please
 
+With everybody's attention being almost completely on K8s/EKS this is where we should really look in terms of ops/responsibility: the promise of fargate.
+
 Just run this Pod/Task for me
 
 {{< tweet 1002613402747920384 >}}
 
 Shift in responsiblility: one layer up.
 
-With everybody's attention being almost completely on K8s/EKS this is where we should really look in terms of ops/responsibility: the promise of fargate.
+Basically serverless ... especially with the latest time and event-based scheduling features announced by Deepak Dayama, Product Lead of Fargate and ECS:
 
-Other public cloud providers:  Azure ACI.
+{{< tweet 1034610825741316096 >}}
 
-But where is AWS? Only with full cost additional services Beanstalk, opsworks...
+The integration of event-based triggers for Fargate lets developers integrate long-running tasks into serverless architectures, which would otherwise be limited by the execution timeouts of Lambda. 
+
+Other public cloud providers:  Azure ACI, whereas AWS only with full cost additional services Beanstalk, opsworks...
 
 ### AWS Fargate
 
 AWS Fargate is a new launch type for ECS.
-
 
 #### Networking
 
