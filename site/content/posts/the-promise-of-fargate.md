@@ -1,6 +1,6 @@
 +++ 
-draft = true
-date = 2018-09-03T20:00:00+02:00
+draft = false
+date = 2018-09-03T12:00:00+02:00
 title = "The Promise of Fargate"
 slug = "" 
 tags = []
@@ -13,7 +13,7 @@ With everybody's attention being almost completely on the recent AWS EKS
 (Elastic Container Services for Kubernetes) developments, I felt that another
 (subjectively) more important ECS announcement is easily overlooked by many:
 AWS Fargate. Yupp, this post is about Fargate and why it is such an important
-service (especially if you write CloudFormation or operated workloads).
+service (especially if you write CloudFormation or operate workloads).
 
 The future of running containers in the cloud is about the next layer of
 abstraction, about moving from machine-level abstraction to process-level
@@ -32,7 +32,7 @@ auto-scaling ECS cluster in CloudFormation you know how cumbersome it can be.
 
 From an operations perspective, Fargate is basically a serverless technology
 because the service hides (abstracts) the node/machine from the consumer. This
-becomes even more apparanet with the latest time and event-based scheduling
+becomes even more apparent with the latest time and event-based scheduling
 features announced by Deepak Dayama, Product Lead of Fargate and ECS:
 
 {{< tweet 1034610825741316096 >}}
@@ -41,7 +41,7 @@ The integration of event-based triggers for Fargate lets developers integrate
 long-running tasks into serverless architectures, which would otherwise be
 limited by the execution timeouts of Lambda. 
 
-It is worth mentioning that other public cloud providers also start to offer
+It is worth mentioning that other public cloud providers also started to offer
 very similar service offerings. Microsoft Azure's ACI (Azure Container
 Instances) is a good example.
 
@@ -50,7 +50,7 @@ responsibility. It shifts one step upwards from machine-level isolation (EC2)
 to process-level isolation (Fargate).
 
 AWS has enough trust in container isolation to also assume responsibility of
-the underlying infrastructure, so that consumers don't need to worry about it
+the underlying infrastructure so that consumers don't need to worry about it
 anymore. It enables developers to focus on what is important.
 
 This is the promise of Fargate.
@@ -58,12 +58,12 @@ This is the promise of Fargate.
 ### AWS Fargate
 
 So essentially, Fargate is a new launch type for ECS. Previously, it was only
-able to use the launch type EC2, which means nothing but running a bunch of EC2
+able to use the launch type EC2, which is nothing but running a bunch of EC2
 instances (probably with ECS-optimized AMIs in an Auto-Scaling group) and
 connecting the ECS agent to your ECS service definitions.
 
-The Fargate launch type enables developers to omit EC2 definitions. An ECS task
-will be scheduled to launch on warm, AWS-maintained container hosts. Each
+The Fargate launch type enables developers to omit the EC2 definitions. An ECS
+task will be scheduled to launch on warm, AWS-maintained container hosts. Each
 Fargate launch has to be configured with a fixed task size. This task size
 basically controls the _cgroups_ limits set by the Fargate service on the
 executing host node. The task size is also what determines how much you will
@@ -83,17 +83,17 @@ port of the task is directly addressed through the ENI, there is no need for
 dynamic ports (no port conflicts).
 
 Considerations for where to place the ENIs of your tasks are basicallly the
-same as with classic EC2. Task that listen for incoming traffic should be
+same as with classic EC2. Tasks that listen for incoming traffic should be
 fronted with a load balancer. Target groups for Elastic Load Balancers should
 track 'ip' targets, since that is how you'd also normally route traffic to
-ENIs. If you expect you Fargate task to have a lot of outgoing traffic you can
-place the ENI into a public subnet, so traffic is not affected by a possiblle
-burst limit on your NAT Gateways.
+ENIs. If you expect your Fargate task to have a lot of outgoing traffic, you
+can place the ENI into a public subnet so traffic is not affected by a
+possible burst limit on your NAT Gateways.
 
 #### Limitations
 
 Since Fargate does not run on you own instances, it is important to mention
-that the service offering comes with certain limitations for your task.
+that the service offering comes with certain limitations for your tasks.
 
 It is (obviously) not possible to run your task in _privileged_ mode. This is a
 hard requirement to guarantee proper process isolation and to ensure that a
@@ -110,9 +110,8 @@ to shared volumes between containers, these volumes have a maximmum size of 4
 GB.
 
 Fargate also only supports using the _awslogs_ driver, so you can only ship
-STDOUT streamm of your containers directly to CloudWatch logs. Of course you
-can then move your logs out of CloudWatch logs to some other place and do
-whatever you want with them.
+STDOUT streams to CloudWatch logs. Of course you can then move your logs out of
+CloudWatch logs to some other place and do whatever you want with them.
 
 There are a bunch of other limits, which are worth checking out before
 migrating workloads to Fargate. Be sure to RTFM.
@@ -133,9 +132,13 @@ actual application. This basically eliminates waste.
 
 What you should really compare, is the amount of development time you need to
 invest to properly setup an auto-scaling EC2-based ECS cluster in
-CloudFormation. 
-TODO: go on
-
+CloudFormation. It can take quite some debugging time to set up all components,
+like the CloudWatch agent to forward logs and OS-level metrics. Additionally,
+operations isn't free as well. You still need to have some ops people in place
+to maintain the container host, no matter how much of the architecture is
+automated. Occasionally, you would also need to perform upgrades of instance
+generations or AMI base images. All of these tasks vanish when running your
+workloads on Fargate.
 
 You can find detailed Fargate pricing information
 [here](https://aws.amazon.com/fargate/pricing/).
@@ -148,7 +151,7 @@ Repo](https://github.com/daniceman/fargate-quicklaunch). It uses
 [sceptre](https://github.com/cloudreach/sceptre) as deployment driver for AWS
 CloudFormation. The repository acts as blueprint for one of the most common
 deployment scenarios. It provisions an ECS cluster, which is fronted with an
-TLS-offloading Application Load Balancer (ALB), to deploy a web-serving
+TLS-offloading Application Load Balancer (ALB) and deploys a web-serving
 container on the Fargate launch type.
 
 The most important Fargate-specific resource definitions are shown in the
@@ -165,7 +168,11 @@ this:
 aws iam create-service-linked-role --aws-service-name ecs.amazonaws.com
 ```
 
-The CloudFormation is also referencing an IAM role, which is being assumed by the running tasks to grant them the most basic permissions (pulling container images, writing log events). These permissions are provided by the AWS-managed policy _AmazonECSTaskExecutionRolePolicy_ and the role can be created like this:
+The CloudFormation templates are also referencing an IAM role, which is being
+assumed by the running tasks to grant them the most basic permissions (pulling
+container images, writing log events). These permissions are provided by the
+AWS-managed policy _AmazonECSTaskExecutionRolePolicy_ and the role can be
+created like this:
 
 ```bash
 aws iam create-role --role-name ecsTaskExecutionRole --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ecs-tasks.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
@@ -179,7 +186,7 @@ to Fargate was that I was able to delete _so much_ Code. Thinking about how
 much engineering time it needed to originally write this code makes me _love_
 Fargate. I am eager to experiment further with the recent announcements around
 time and event-based triggers for executing Fargate tasks, since this would
-finally present a feasible method of integrating long-running task into
+finally present a feasible method of integrating long-running tasks into
 serverless architectures on AWS.
 
 All in all, Fargate allows engineers to focus on running their workloads without
