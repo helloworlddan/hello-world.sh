@@ -1,4 +1,4 @@
-+++ 
++++
 draft = false
 date = 2018-10-19T14:00:00+02:00
 title = "CloudFormation Macros"
@@ -33,7 +33,8 @@ Note the new Cloudformation resource `AWS::Cloudformation::Macro`, which makes
 the Lambda function accessible from other CloudFormation templates.
 
 The macro can be deployed like this:
-```
+
+```bash
 aws cloudformation create-stack \
       --stack-name macro-password-generator \
       --capabilities CAPABILITY_NAMED_IAM \
@@ -59,7 +60,7 @@ passphrase in SSM first.
 Here is a very simple resource definition of a small RDS instance using our
 newly generated password generator macro.
 
-{{< gist daniceman 909393a0d253872d1a1729a1b1487291 >}}
+{{< gist helloworlddan 909393a0d253872d1a1729a1b1487291 >}}
 
 This is using the same intrinsic 'Fn::Transform' function that powers other
 Cloudformation features, like `AWS::Include`.
@@ -67,11 +68,11 @@ Cloudformation features, like `AWS::Include`.
 You can deploy the RDS instance by instructing Cloudformation to generate a
 ChangeSet like so:
 
-```
+```bash
 aws cloudformation deploy \
       --stack-name database \
       --template-file use-password-generator.yaml
 ```
 
 That's it. The newly generated password to the RDS master user should be the
-value behind `/rds/passwords/dan` in the SSM Parameter Store. 
+value behind `/rds/passwords/dan` in the SSM Parameter Store.

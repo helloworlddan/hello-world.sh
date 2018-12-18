@@ -90,7 +90,7 @@ be configured to do so automatically.
 Here is the CloudFormation template to deploy all the infrastructure I need for
 hello-world.sh:
 
-{{< gist daniceman 1e3283b6fede5e535efed87d5a087470 >}}
+{{< gist helloworlddan 1e3283b6fede5e535efed87d5a087470 >}}
 
 It is not that much! We are just feeding in the name of our domain and a
 previously created certificate in us-east-1. It has to be in us-east-1 to be
@@ -118,6 +118,6 @@ state-of-the-art static web-site, that is ready to scale to millions of
 viewers.
 
 The complete code to this page (content & infrastructure) is
-[here](https://github.com/daniceman/hello-world.sh).
+[here](https://github.com/helloworlddan/hello-world.sh).
 
 And yes: it has a hello-world.sh file in it.

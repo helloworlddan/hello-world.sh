@@ -1,8 +1,8 @@
-+++ 
++++
 draft = false
 date = 2018-09-03T12:00:00+02:00
 title = "The Promise of Fargate"
-slug = "" 
+slug = ""
 tags = []
 categories = ["AWS", "Fargate", "Containers", "IaC"]
 +++
@@ -157,7 +157,7 @@ container on the Fargate launch type.
 The most important Fargate-specific resource definitions are shown in the
 following extract from the deployment.
 
-{{< gist daniceman ef7ae01cb8e893cfb62a6ece1d3e95b2 >}}
+{{< gist helloworlddan ef7ae01cb8e893cfb62a6ece1d3e95b2 >}}
 
 Note how this is relying on the presence of certain resources. The
 service-linked role for ECS needs to be present in your account. CloudFormation
@@ -193,4 +193,3 @@ All in all, Fargate allows engineers to focus on running their workloads without
 the need to maintain the necessary infrastructure:
 
 Just run this container for me, I don't care how and please don't tell me.
- 

@@ -80,19 +80,21 @@ It shouldn't be hard to detect the obvious pattern in the architecture.
 I am assuming that you have `npm` installed.
 
 Let's add some node packages first!
-```
+
+```bash
 # NOTE This will only add a few CDK modules. To add specific modules, run:
-# $ npm i -g @aws-cdk/aws-lambda
-$ npm i -g aws-cdk
+# npm i -g @aws-cdk/aws-lambda
+npm i -g aws-cdk
 ```
 
 We are going to setup a project directory and initialize it with the CDK. I am
 choosing TypeScript to build this project.
+
 ```bash
-$ mkdir cdk-setup-service
-$ cd cdk-setup-service
+mkdir cdk-setup-service
+cd cdk-setup-service
 # Initialize the project. NOTE: you could also use --language java
-$ cdk init app --language typescript
+cdk init app --language typescript
 ```
 
 That's it! The CDK will auto-generate some code that would setup an SNS topic
@@ -111,7 +113,7 @@ The following TypeScript class definition acts like an umbrella, holding all
 the required resources to setup service configurators for one application. I am
 going to save it to `bin/cdk-service-configurator.ts`
 
-{{< gist daniceman e77c9e87e49e0db7a9603d8e9e67cfa2  >}}
+{{< gist helloworlddan e77c9e87e49e0db7a9603d8e9e67cfa2  >}}
 
 Nice. The service configurator can now be instantiated for every application
 that requires configuration. Note how the service configurator expects to find
@@ -120,8 +122,8 @@ the Python code for it's Lambda functions in a very specific directory.
 The current layout of the project directory looks like this (node_modules
 redacted for obvious reasons):
 
-```
-$ tree
+```bash
+tree
 .
 ├── README.md
 ├── bin
@@ -144,7 +146,7 @@ Let's change the auto-generated file `bin/cdk-setup-service.ts` so it
 references our service configurator. We are also going to instantiate it for
 the application Slack.
 
-{{< gist daniceman 73e4c5eaa34f94033827b6fe4ebec82b  >}}
+{{< gist helloworlddan 73e4c5eaa34f94033827b6fe4ebec82b  >}}
 
 Okay! That should be it! `bin/cdk-setup-service.ts` defines a class, which
 inherits from cdk.Stack and instantiates a global topic for
@@ -157,29 +159,33 @@ Let's get cracking and deploy our project to the cloud. After we make sure that
 our current environment has valid AWS credentials, we can get to work.
 
 Firstly, we need to transpile our TypeScript code to JavaScript.
-```
-$ npm run build
+
+```bash
+npm run build
 ```
 
 Okay, now since our deployment requires the usage of assets (zipped Lambda
 function code), we need to instruct the CDK to bootstrap our environment.
 This will create an additional stack containing a bucket to save our Lambda
 code packages in.
-```
-$ cdk bootstrap
+
+```bash
+cdk bootstrap
 ```
 
 Now we can use the CDK to compute a diff between the resources that are already
 deployed and the changes that the CDK would hand to CloudFormation to deploy
 now. Since we haven't deployed anything yet, the first diff will contain all
 the defined resources.
-```
-$ cdk diff
+
+```bash
+cdk diff
 ```
 
 After we read through the proposed changes we can go ahead and deploy.
-```
-$ cdk deploy
+
+```bash
+cdk deploy
 ```
 
 CloudFormation will now attempt to create our infrastructure. The magical part
@@ -189,7 +195,6 @@ Troposphere, we would have to create additional resources like a
 `AWS::Lambda::Permission` to enable the SNS topic to actually invoke the Lambda
 functions. The CDK has automatically done this for us in the background! To
 verify this, check the output of `cdk diff` again.
-
 
 ### Conclusion
 
