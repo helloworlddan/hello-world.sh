@@ -3,21 +3,21 @@ BUCKET := $(shell /usr/local/bin/sceptre --output json --dir infrastructure desc
 all: infrastructure publish
 
 post:
-	hugo -s site new "posts/${title}.md"
-	mkdir -p "site/static/images/${title}"
+	touch "site/_posts/2000-01-01-${title}.markdown"
+	mkdir -p "site/assets/images/${title}"
 
 local:
-	hugo -s site server -D
+	jekyll serve --watch -s site
 
 infrastructure:
 	sceptre --dir infrastructure launch-stack stamer page
 
 publish:
-	hugo -s site
-	cd site/public && aws s3 sync . "s3://${BUCKET}"
+	jekyll build -s site
+	cd _site && aws s3 sync . "s3://${BUCKET}"
 
 clean:
-	rm -rf site/public
-	aws s3 rm --recursive "s3://${BUCKET}/"
+	rm -rf _site
+	rm -rf .sass-cache
 
 .PHONY: all local infrastructure publish clean post
