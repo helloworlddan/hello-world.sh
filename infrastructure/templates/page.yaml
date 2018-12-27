@@ -32,7 +32,9 @@ Resources:
         Statement:
           - Action:
             - s3:GetObject
-            Resource: !Join [ "", [ "arn:aws:s3:::", !Ref Bucket, "/*"] ]
+            Resource:
+              - !Join [ "", [ "arn:aws:s3:::", !Ref Bucket, "/*"] ]
+              - !Join [ "", [ "arn:aws:s3:::", !Ref Bucket ] ]
             Effect: Allow
             Principal:
               CanonicalUser: !GetAtt OAI.S3CanonicalUserId
