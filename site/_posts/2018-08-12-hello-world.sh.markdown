@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hello-World.sh"
+title: "hello-world.sh"
 date: 2018-08-12
 ---
 
