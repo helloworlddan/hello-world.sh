@@ -19,5 +19,6 @@ publish:
 clean:
 	rm -rf _site
 	rm -rf .sass-cache
+	rm -rf .tweet-cache
 
 .PHONY: all local infrastructure publish clean post

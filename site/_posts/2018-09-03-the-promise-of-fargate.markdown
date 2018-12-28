@@ -18,7 +18,7 @@ abstraction. We don't really care how the container is executed. Here is
 container icon [@kelseyhightower](https://twitter.com/kelseyhightower) putting
 it in very simple, but complete words:
 
-{% twitternocache https://twitter.com/kelseyhightower/status/1002613402747920384 %}
+{% twitter https://twitter.com/kelseyhightower/status/1002613402747920384 %}
 
 (Note that, K8S pods are roughly the same concept as ECS tasks)
 
@@ -32,7 +32,7 @@ because the service hides (abstracts) the node/machine from the consumer. This
 becomes even more apparent with the latest time and event-based scheduling
 features announced by Deepak Dayama, Product Lead of Fargate and ECS:
 
-{% twitternocache https://twitter.com/saysdd/status/1034610825741316096 %}
+{% twitter https://twitter.com/saysdd/status/1034610825741316096 %}
 
 The integration of event-based triggers for Fargate lets developers integrate
 long-running tasks into serverless architectures, which would otherwise be

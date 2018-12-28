@@ -42,7 +42,7 @@ needs to be state-of-the-art.
 I wanted hello-world.sh to:
 
 * be globally retrievable with sub-second latency through a CDN
-* have its traffic completely encrypted with 256-bit RSA
+* have its traffic completely encrypted with 256-bit AES over TLS
 * have a proper trust validation with recognised root CAs
 * be as highly available as possible
 * be completely automated and
