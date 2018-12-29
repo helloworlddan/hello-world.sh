@@ -1,2 +1,4 @@
 .DS_Store
-site/public
+_site
+.sass/cache
+.tweet-cache
