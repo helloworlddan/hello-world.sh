@@ -207,4 +207,5 @@ viewers.
 The complete code to this page (content & infrastructure) is
 [here](https://github.com/helloworlddan/hello-world.sh).
 
-And yes: it has a hello-world.sh file in it.
+And yes: it has a [hello-world.sh](https://github.com/helloworlddan/hello-world.sh/blob/master/hello-world.sh)
+file in it.
