@@ -1,6 +1,6 @@
 BUCKET := $(shell /usr/local/bin/sceptre --output json --dir infrastructure describe-stack-outputs stamer page | jq -r ".[] | select(.OutputKey==\"Bucket\").OutputValue")
 
-all: infrastructure publish
+all: infrastructure publish clean
 
 post:
 	touch "site/_posts/2000-01-01-${title}.markdown"
