@@ -3,10 +3,12 @@ BUCKET := $(shell /usr/local/bin/sceptre --output json --dir infrastructure desc
 all: infrastructure publish clean
 
 post:
+	git co -B "post/${title}"
 	touch "site/_posts/2000-01-01-${title}.markdown"
 	mkdir -p "site/assets/images/${title}"
 
 local:
+	nohup sleep 2 && open http://localhost:4000 &
 	jekyll serve --watch -s site
 
 infrastructure:
@@ -20,5 +22,6 @@ clean:
 	rm -rf _site
 	rm -rf .sass-cache
 	rm -rf .tweet-cache
+	rm -rf nohup.out
 
 .PHONY: all local infrastructure publish clean post
