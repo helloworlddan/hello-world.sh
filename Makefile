@@ -1,4 +1,4 @@
-BUCKET := $(shell /usr/local/bin/sceptre --output json --dir infrastructure describe-stack-outputs stamer page | jq -r ".[] | select(.OutputKey==\"Bucket\").OutputValue")
+BUCKET := $(shell sceptre --output json --dir infrastructure list outputs stamer/page | jq -r '.[] | ."stamer/page"[] | select(.OutputKey=="Bucket").OutputValue')
 
 all: infrastructure publish clean
 
@@ -12,7 +12,7 @@ local:
 	jekyll serve --watch -s site
 
 infrastructure:
-	sceptre --dir infrastructure launch-stack stamer page
+	sceptre --dir infrastructure launch -y stamer/page
 
 publish:
 	jekyll build -s site
