@@ -9,7 +9,7 @@ date: 2019-03-25
 This post will discuss the usage of CloudFormation Custom Resources as a
 frontend to CloudFormation Stack Sets so you can use a CloudFormation template
 to use CloudFormation Stack Sets to deploy lots of CloudFormation stacks. Wait,
-WHAT?
+**WHAT?!**
 
 # CloudFormation Stack Sets
 
@@ -21,7 +21,7 @@ example would be a deployment of AWS Config rules to track whether all RDS
 database instances and/or snapshots are encrypted across every region and
 across every account in your AWS Organization.
 
-Stack sets allow you to define a uniform CloudFormation template and create a
+Stack Sets allow you to define a uniform CloudFormation template and create a
 so-called stack set definition around it. This definition holds configuration
 parameters as to how to deploy the associated CloudFormation template. It
 includes role definitions for CloudFormation to actually deploy things as well
@@ -44,14 +44,106 @@ Github](https://github.com/awslabs/aws-cloudformation-templates/tree/master/aws/
 
 # Deploying the Custom Resource
 
-- TODO: lambda deployment (using CloudFormation, duh)
+Deployment of the Custom Resource is very straight forward and works exactly as
+Chuck describes it in his
+[README.md](https://github.com/awslabs/aws-cloudformation-templates/blob/master/aws/solutions/StackSetsResource/README.md).
+The Custom Resource gets packaged and deployed with CloudFormation (of course).
+Afterward, the Stack Set resource type will be available as `Custom::StackSet`.
 
-# Building a Target Template
+To effectively execute Stack Set deployments driven by the resource, we need to
+also provision some IAM roles, so that CloudFormation can
+actually deploy stacks on you behalf. Two roles are needed:
 
+First off, CloudFormations service principal `cloudformation.amazonaws.com`
+needs to be able to `sts:AssumeRole`. This role needs to be present in the
+administrative AWS account of the landing zone (I am assuming you know what a
+landing zone is) and from now on, we will refer to this role as the
+'AdministrationRole'.
+
+Furthermore, we need to provision the 'ExecutionRole'. The ExecutionRole needs
+to be available in the accounts in which we actually want to deploy resources
+through Stack Sets. This role needs to have a trust relationship with your
+administrative AWS account or the AdministrationRole specifically. It also
+needs to have enough permissions to execute the CloudFormation template that
+you would like to drive through Stack Sets. It might be a good idea to re-use
+the administrative role that may or may not be part of your landing zone
+environement.
+
+Once all of these roles are in place, a typical Stack Set driven deployment of
+a template would assume the roles as follows:
+
+```plain
++-------------------------------------------------------------------------------------------+
+|              sts:AssumeRole                sts:AssumeRole          deployment             |
+|                                                                                           |
+|CloudFormation            AdministrationRole           ExecutionRole                       |
+|                +------>                      +------>                 +--->  StackInstance|
+|administrative              administrative    |           target                           |
+|   account                     account        |          account A                         |
+|                                              |                                            |
+|                                              |                                            |
+|                                              |                                            |
+|                                              |        ExecutionRole                       |
+|                                              +------>                 +--->  StackInstance|
+|                                                          target                           |
+|                                                         account B                         |
++-------------------------------------------------------------------------------------------+
+
+```
+
+After putting everything in place, we finally get to actually use the new
+abstraction layer we build. The Custom Resource will allow us to use
+CloudFormation Stack Sets through the prefered interface: CloudFormation.
 
 # Creating the 'Super Template'
 
-- TODO: sceptre mega template
+- TODO: Creating super Template
+
+```yaml
+Parameters:
+  AdministratonRole:
+    Type: String
+    Description: ARN of the AdministrationRole (local switch-role).
+  ExecutionRole:
+    Type: String
+    Description: Name of the ExecutionRole (Role to assume in target accounts).
+  TemplateURL:
+    Type: String
+    Description: S3 URL of template to deploy to target accounts.
+    AllowedPattern: ^https://s3(.+)\.amazonaws.com/.+$
+  SetName:
+    Type: String
+    Description: Name of this Stack Set
+  Accounts:
+    Type: List<String>
+    Description: List of targets accounts
+  Regions:
+    Type: List<String>
+    Description: List of targets accounts
+
+Resources:
+  StackSet:
+    Type: Custom::StackSet
+    Properties:
+      ServiceToken:
+        Fn::ImportValue: StackSetCustomResource
+      StackSetName: !Ref SetName
+      TemplateURL: !Ref TemplateURL
+      Capabilities:
+        - CAPABILITY_IAM
+      AdministrationRoleARN: !Ref AdministrationRole
+      ExecutionRoleName: !Ref ExecutionRole
+      OperationPreferences: {
+        "FailureToleranceCount": 500,
+        "MaxConcurrentCount": 500
+      }
+      Tags:
+        - Creator: Daniel Stamer
+        - Mail: dan@hello-world.sh
+      StackInstances:
+        - Regions: !Ref Regions
+          Accounts: !Ref Accounts
+```
 
 # Limits of CloudFormation Stack Sets
 
