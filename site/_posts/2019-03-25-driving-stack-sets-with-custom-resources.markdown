@@ -73,22 +73,19 @@ Once all of these roles are in place, a typical Stack Set driven deployment of
 a template would assume the roles as follows:
 
 ```plain
-+-------------------------------------------------------------------------------------------+
-|              sts:AssumeRole                sts:AssumeRole          deployment             |
-|                                                                                           |
-|CloudFormation            AdministrationRole           ExecutionRole                       |
-|                +------>                      +------>                 +--->  StackInstance|
-|administrative              administrative    |           target                           |
-|   account                     account        |          account A                         |
-|                                              |                                            |
-|                                              |                                            |
-|                                              |                                            |
-|                                              |        ExecutionRole                       |
-|                                              +------>                 +--->  StackInstance|
-|                                                          target                           |
-|                                                         account B                         |
-+-------------------------------------------------------------------------------------------+
+              sts:AssumeRole                sts:AssumeRole          deployment
 
+CloudFormation            AdministrationRole           ExecutionRole
+                +------>                      +------>                 +--->  StackInstance
+administrative              administrative    |           target
+   account                     account        |          account A
+                                              |
+                                              |
+                                              |
+                                              |        ExecutionRole
+                                              +------>                 +--->  StackInstance
+                                                          target
+                                                         account B
 ```
 
 After putting everything in place, we finally get to actually use the new
