@@ -4,12 +4,12 @@ title: "Driving CloudFormation Stack Sets with Custom Resources"
 date: 2019-03-25
 ---
 
-![Yo dawg, I heard you like CloudFormation, so I put some CloudFormation on your CloudFormation](/assets/images/driving-stack-sets-with-custom-resources/xzibit.jpg)
-
 This post will discuss the usage of CloudFormation Custom Resources as a
 frontend to CloudFormation Stack Sets so you can use a CloudFormation template
 to use CloudFormation Stack Sets to deploy lots of CloudFormation stacks. Wait,
 **WHAT?!**
+
+![Yo dawg, I heard you like CloudFormation, so I put some CloudFormation on your CloudFormation](/assets/images/driving-stack-sets-with-custom-resources/xzibit.jpg)
 
 # CloudFormation Stack Sets
 
@@ -94,7 +94,17 @@ CloudFormation Stack Sets through the prefered interface: CloudFormation.
 
 # Creating the 'Super Template'
 
-- TODO: Creating super Template
+Finally, it's time to look at the 'outer' CloudFormation template. This
+template will instantiate the new Custom Resource, which in turn will create,
+update or delete Stack Set instances that actually run the 'inner'
+CloudFormation template.
+
+For this, the inner CloudFormation template needs to be available on S3. I
+recommend appending a hash value of the template contents (or a version
+identifier) to its S3 object key, so that the outer template can be informed of
+a change in the inner template.
+
+The `.yaml` below is an example of the outer template. 
 
 ```yaml
 Parameters:
@@ -113,10 +123,10 @@ Parameters:
     Description: Name of this Stack Set
   Accounts:
     Type: List<String>
-    Description: List of targets accounts
+    Description: List of target accounts
   Regions:
     Type: List<String>
-    Description: List of targets accounts
+    Description: List of target regions
 
 Resources:
   StackSet:
@@ -149,3 +159,4 @@ Resources:
 # Conclusion
 
 - TODO: LZ possibilities
+

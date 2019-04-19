@@ -21,7 +21,7 @@ p {
 }
 
 img {
-    margin: 20px auto;
+    margin: 40px auto;
     display: block;
     background-color: $cloudy;
     max-width: 100%;
@@ -137,7 +137,8 @@ strong {
 }
 
 .post-title {
-    margin-bottom: 110px;
+    margin-top: 80px;
+    margin-bottom: 60px;
 }
 
 .post-title__text {
@@ -183,7 +184,7 @@ strong {
 .explore {
     text-align: center;
     color: $cloudy;
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .explore__devider {
@@ -293,7 +294,7 @@ strong {
     }
 
     .explore {
-        margin-top: 80px;
+        margin-top: 20px;
     }
 
     .post-title__text {
