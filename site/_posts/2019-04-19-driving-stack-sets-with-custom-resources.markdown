@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Driving CloudFormation Stack Sets with Custom Resources"
-date: 2019-03-25
+date: 2019-04-19
 ---
 
 This post will discuss the usage of CloudFormation Custom Resources as a
@@ -152,11 +152,48 @@ Resources:
           Accounts: !Ref Accounts
 ```
 
+You can execute this template directly through the common CloudFormation
+interfaces such as API, CLI or the Web Console. Alternatively, you can use an
+automation driver tool like [Sceptre](https://github.com/cloudreach/sceptre) to
+automate the upload of the inner template or to dynamically retrieve
+configuration for target accounts and regions.
+
+If you want to stay _completely native_ to CloudFormation, you can look at
+[CloudFormation Macros](/2018/10/19/cloudformation-macros.html) to retrieve
+dynamic parameter configuration through a Lambda-based backend.
+
 # Limits of CloudFormation Stack Sets
 
-- TODO: Soft limits
+There are two soft limits of Stack Sets that will affect your endeavors
+especially when you are operating are large scales. First of all, you can only
+have 20 Stack Set definitions. This is not so bad, but it might affect the way
+you are writing your inner templates. If you are used to having very few
+resources in your template, you will run into this limit quickly. Grouping
+resources into larger purpose-bound templates certainly helps. The second soft
+limit is more severe. Per default, a single Stack Set definition can only
+contain up to 500 stack instances. 500 seems like a lot, but if you are running
+a platform with 100 AWS accounts and you want to deploy i.e. AWS Config recorders
+and rules to more than 5 regions, then you are having a problem. Note that this
+is an absolutely valid use case. Now, AWS might increase that soft limit for
+you if you manage to convince them of the validity of your use case. Grouping
+these kinds of deployments into separate Stack Set definitions might also be an
+alternative, but then you'd be affected by the first soft limit sooner.
 
 # Conclusion
 
-- TODO: LZ possibilities
+The interesting feature of Stack Sets is the ability to not just execute a
+CloudFormation template in the local account and region, but to bulk execute
+them over a large set of accounts & regions. Now, the standard Stack Set
+interface itself is not very CloudFormation-ish in the sense that you are not
+expressing a declarative desired state. The Custom Resource for Stack Sets
+makes Stack Sets act almost exactly like other resources managed by
+CloudFormation. The user can express a desired state and the service takes care
+of drifting the actual state towards the expressed desired one.
+
+The implications for platform automation tools are potentially huge. If you are
+a platform operator and you are maintaining systems like an Account Vending
+Machine or a Landing Zone bootstrapping tool, then you can already see the
+possible applications for Stack Sets. Platform tooling, which continously
+re-runs tasks to ensure the presence of i.e. compliance configurations over
+hundreds of AWS accounts, can massively benefit from Stack Sets.
 
