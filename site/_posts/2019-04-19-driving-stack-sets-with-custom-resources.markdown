@@ -14,7 +14,7 @@ to use CloudFormation Stack Sets to deploy lots of CloudFormation stacks. Wait,
 # CloudFormation Stack Sets
 
 CloudFormation Stack Sets is a great way to deploy uniform configurations of
-resources into multiple regions and accounts in your AWS Organization. Its a
+resources into multiple regions and accounts in your AWS Organization. It's a
 great feature for large scale deployments, really. It is particularly useful in
 deploying compliance mechanisms as part of landing zone implementations. A good
 example would be a deployment of AWS Config rules to track whether all RDS
