@@ -23,6 +23,7 @@ Resources:
           Value: !Join [ "", [ "https://", !Ref DomainName ] ]
       WebsiteConfiguration:
         IndexDocument: index.html
+        ErrorDocument: 404.html
 
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -74,6 +75,13 @@ Resources:
         ViewerCertificate:
           AcmCertificateArn: !Ref Certificate
           SslSupportMethod: sni-only
+        CustomErrorResponses:
+        - ErrorCode: 403
+          ResponseCode: 404
+          ResponsePagePath: /404.html
+        - ErrorCode: 404
+          ResponseCode: 404
+          ResponsePagePath: /404.html
 
   DNS:
     Type: AWS::Route53::RecordSet
