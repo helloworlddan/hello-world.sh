@@ -1,10 +1,12 @@
 BUCKET := $(shell sceptre --output json --dir infrastructure list outputs stamer/page | jq -r '.[] | ."stamer/page"[] | select(.OutputKey=="Bucket").OutputValue')
 
+DATE := $(shell date +%Y-%m-%d)
+
 all: infrastructure publish clean
 
 post:
 	git co -B "post/${TITLE}"
-	cp "site/_templates/1970-01-01-template.markdown" "site/_posts/$(date +%Y)-$(date +%m)-$(date +%d)-${TITLE}.markdown"
+	cp "site/_templates/1970-01-01-template.markdown" "site/_posts/${DATE}-${TITLE}.markdown"
 	mkdir -p "site/assets/images/${TITLE}"
 
 local:
