@@ -39,5 +39,7 @@ echo "Hello World!"
 
 ### Heading 3
 
-More text
+Twitter widget:
+
+{% twitter https://twitter.com/kelseyhightower/status/1002613402747920384 %}
 
