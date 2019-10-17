@@ -8,9 +8,7 @@ Introductory words...
 
 # Heading 1
 
-Regular text, **bold text**, and _underlined text_
-
-Next Paragraph with `inline code`
+Regular text, **bold text**, `verbatim`, and _italic text_
 
 Links [link text](https://example.com)
 
@@ -42,4 +40,10 @@ echo "Hello World!"
 Twitter widget:
 
 {% twitter https://twitter.com/kelseyhightower/status/1002613402747920384 %}
+
+Numbered list:
+
+1. Numbered item 1
+2. Numbered item 2
+3. Numbered item 3
 
