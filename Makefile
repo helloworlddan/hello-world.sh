@@ -6,8 +6,9 @@ all: infrastructure publish clean
 
 post:
 	git co -B "post/${TITLE}"
-	cp "site/_templates/1970-01-01-template.markdown" "site/_posts/${DATE}-${TITLE}.markdown"
+	sed -E ``s/1970-01-01/${DATE}/'' "site/_templates/1970-01-01-template.markdown" > "site/_posts/${DATE}-${TITLE}.markdown"
 	mkdir -p "site/assets/images/${TITLE}"
+	touch "site/assets/images/${TITLE}/asset.png"
 
 local:
 	nohup sleep 2 && open http://localhost:4000 &
