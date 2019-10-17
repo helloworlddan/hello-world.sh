@@ -1,0 +1,43 @@
+---
+layout: post
+title: "TEMPLATE"
+date: 1970-01-01
+---
+
+Introductory words...
+
+# Heading 1
+
+Regular text, **bold text**, and _underlined text_
+
+Next Paragraph with `inline code`
+
+Links [link text](https://example.com)
+
+Images:
+
+![Alt text](/assets/post-dir/image.png)
+
+## Heading 2
+
+Nice bullet lists:
+
+* Item 1
+* Item 2
+* Item n
+
+Example Code with highlight:
+
+```ruby
+puts 'Hello World!'
+```
+Example Bash:
+
+```bash
+echo "Hello World!"
+```
+
+### Heading 3
+
+More text
+

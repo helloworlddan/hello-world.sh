@@ -4,7 +4,7 @@ all: infrastructure publish clean
 
 post:
 	git co -B "post/${TITLE}"
-	touch "site/_posts/2000-01-01-${TITLE}.markdown"
+	cp "site/_templates/1970-01-01-template.markdown" "site/_posts/$(date +%Y)-$(date +%m)-$(date +%d)-${TITLE}.markdown"
 	mkdir -p "site/assets/images/${TITLE}"
 
 local:
