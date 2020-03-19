@@ -1,5 +1,3 @@
-BUCKET := $(shell sceptre --output json --dir infrastructure list outputs stamer/page | jq -r '.[] | ."stamer/page"[] | select(.OutputKey=="Bucket").OutputValue')
-
 DATE := $(shell date +%Y-%m-%d)
 
 all: infrastructure publish clean
@@ -15,7 +13,7 @@ local:
 	jekyll serve --watch -s site
 
 infrastructure:
-	sceptre --dir infrastructure launch -y stamer/page
+	echo "build me"
 
 publish:
 	jekyll build -s site
