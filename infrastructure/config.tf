@@ -1,6 +1,11 @@
+provider "google-beta" {
+  region = "europe-west3"
+  project = lookup(data.external.gcp_project.result, "project", "null")
+}
+
 provider "google" {
   region = "europe-west3"
-  project = "${lookup(data.external.gcp_project.result, "project", "null")}"
+  project = lookup(data.external.gcp_project.result, "project", "null")
 }
 
 data "external" "gcp_project" {

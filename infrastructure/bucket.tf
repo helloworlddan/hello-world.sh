@@ -1,5 +1,5 @@
-resource "google_storage_bucket" "blog_bucket" {
-  name          = "hwsh_blog"
+resource "google_storage_bucket" "default" {
+  name          = local.prefix
   location      = "EU"
   force_destroy = true
 
@@ -11,7 +11,7 @@ resource "google_storage_bucket" "blog_bucket" {
   }
 
   cors {
-    origin          = ["http://hello-world.sh"]
+    origin          = ["https://blog.hello-world.sh"]
     method          = ["GET", "HEAD"]
     response_header = ["*"]
     max_age_seconds = 3600
