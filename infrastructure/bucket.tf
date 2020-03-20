@@ -24,3 +24,7 @@ resource "google_storage_bucket_iam_member" "viewer" {
   role = "roles/storage.objectViewer"
   member = "allUsers"
 }
+
+output "bucket" {
+  value = google_storage_bucket.default.name
+}
