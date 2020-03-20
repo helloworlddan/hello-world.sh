@@ -1,6 +1,7 @@
 resource "google_storage_bucket" "default" {
-  name          = local.prefix
-  location      = "EU"
+  project = local.project
+  name = local.prefix
+  location = "EU"
   force_destroy = true
 
   bucket_policy_only = true
@@ -11,9 +12,15 @@ resource "google_storage_bucket" "default" {
   }
 
   cors {
-    origin          = ["https://blog.hello-world.sh"]
-    method          = ["GET", "HEAD"]
+    origin = ["https://${local.domain}"]
+    method = ["GET", "HEAD"]
     response_header = ["*"]
     max_age_seconds = 3600
   }
+}
+
+resource "google_storage_bucket_iam_member" "viewer" {
+  bucket = google_storage_bucket.default.name
+  role = "roles/storage.objectViewer"
+  member = "allUsers"
 }
