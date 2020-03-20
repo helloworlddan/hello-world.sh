@@ -26,3 +26,7 @@ resource "google_compute_backend_bucket" "default" {
   bucket_name = google_storage_bucket.default.name
   enable_cdn  = true
 }
+
+output "proxy_ip" {
+  value = google_compute_global_forwarding_rule.default.ip_address
+}
