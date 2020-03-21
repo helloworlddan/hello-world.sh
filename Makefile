@@ -15,6 +15,9 @@ local:
 	nohup sleep 2 && open http://localhost:4000 &
 	bundle exec jekyll serve --watch -s site
 
+admin-bucket:
+	gsutil mb gs://hwsh-blog-admin
+
 infrastructure:
 	cd infrastructure; tf init
 	cd infrastructure; tf apply

@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "hwsh_blog-tf-state"
+    bucket  = "hwsh-blog-admin"
     prefix  = "terraform/state"
   }
 }

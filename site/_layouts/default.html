@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script>
+        if (window.location.protocol != "https:")
+            window.location = window.location.toString().replace(/^http:/, "https:");
+    </script>
     <head>
         <link rel="icon" href="/assets/images/favicon-32x32.png">
         {% include meta_tags/base.html %}
