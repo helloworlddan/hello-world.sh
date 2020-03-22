@@ -1,7 +1,5 @@
 DATE := $(shell date +%Y-%m-%d)
 
-all: init infrastructure publish clean
-
 init:
 	bundle install --deployment
 
@@ -15,14 +13,18 @@ local:
 	nohup sleep 2 && open http://localhost:4000 &
 	bundle exec jekyll serve --watch -s site
 
-admin-bucket:
-	gsutil mb gs://hwsh-blog-admin
+infrastructure-gcp:
+	make -C infrastructure-aws
 
-infrastructure:
-	cd infrastructure; tf init
-	cd infrastructure; tf apply
+infrastructure-gcp:
+	make -C infrastructure-gcp
 
-publish:
+publish-aws:
+	$(eval BUCKET := $(shell cd infrastructure && tf output -json | jq -r '.bucket.value'))
+	bundle exec jekyll build -s site
+	cd _site && gsutil -m rsync -r -d . "gs://$(BUCKET)"
+
+publish-gcp:
 	$(eval BUCKET := $(shell cd infrastructure && tf output -json | jq -r '.bucket.value'))
 	bundle exec jekyll build -s site
 	cd _site && gsutil -m rsync -r -d . "gs://$(BUCKET)"
@@ -33,5 +35,5 @@ clean:
 	rm -rf .tweet-cache
 	rm -rf nohup.out
 
-.PHONY: all init local infrastructure publish clean post
+.PHONY: all init local infrastructure-gcp infrastructure-aws publish clean post
 
