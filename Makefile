@@ -49,5 +49,5 @@ clean:
 	rm -rf container/site
 	rm -rf nohup.out
 
-.PHONY: all init local infrastructure-gcp infrastructure-aws infrastructure-cloudrun publish-cloudrub publish-gcs publis-s3 clean post
+.PHONY: all init local infrastructure-gcp infrastructure-aws infrastructure-cloudrun publish-cloudrun publish-gcs publis-s3 clean post
 
