@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
     bucket  = "hwsh-blog-admin"
-    prefix  = "terraform-cr/state"
+    prefix  = "terraform/state"
   }
 }
 
