@@ -13,16 +13,16 @@ local:
 	nohup sleep 2 && open http://localhost:4000 &
 	bundle exec jekyll serve --watch -s site
 
-infrastructure-gcp:
+infrastructure-aws:
 	make -C infrastructure-aws
 
 infrastructure-gcp:
 	make -C infrastructure-gcp
 
 publish-aws:
-	$(eval BUCKET := $(shell cd infrastructure && tf output -json | jq -r '.bucket.value'))
+	$(eval BUCKET := $(shell sceptre --output json --dir infrastructure list outputs stamer/page | jq -r '.[] | ."stamer/page"[] | select(.OutputKey=="Bucket").OutputValue'))
 	bundle exec jekyll build -s site
-	cd _site && gsutil -m rsync -r -d . "gs://$(BUCKET)"
+	cd _site && aws s3 sync . "s3://${BUCKET}"
 
 publish-gcp:
 	$(eval BUCKET := $(shell cd infrastructure && tf output -json | jq -r '.bucket.value'))
