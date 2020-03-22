@@ -12,6 +12,9 @@ post:
 local:
 	bundle exec jekyll serve --watch -s site
 
+build:
+	bundle exec jekyll build -s site
+
 infrastructure-s3:
 	make -C infrastructure/aws-s3 infrastructure
 
