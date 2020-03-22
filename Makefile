@@ -10,7 +10,6 @@ post:
 	touch "site/assets/images/${TITLE}/asset.png"
 
 local:
-	nohup sleep 2 && open http://localhost:4000 &
 	bundle exec jekyll serve --watch -s site
 
 infrastructure-s3:

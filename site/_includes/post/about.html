@@ -1,6 +1,6 @@
 <div class="about">
     <div class="about__text">
-        Written by <strong> {% if page.author.fullname %} {{ page.author.fullname }} {% else %} {{ site.author.fullname }} {% endif %}</strong>
+        Written by <strong>{{ site.author.fullname }}</strong> {% if page.coauthor.fullname %} and <strong>{{ page.coauthor.fullname }}</strong>{% endif %}
         on <strong>{{ page.date | date: "%d %B %Y" }}</strong>
     </div>
 </div>
