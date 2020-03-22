@@ -11,6 +11,12 @@ resource "google_cloud_run_service" "default" {
     spec {
       containers {
         image = "gcr.io/${local.project}/hwsh"
+        resources {
+          limits = {
+            cpu = "1000m"
+            memory = "256M"
+          }
+        }
       }
     }
   }
@@ -42,5 +48,12 @@ resource "google_cloud_run_service_iam_binding" "public" {
   role = "roles/run.invoker"
   members = [
     "allUsers"
+  ]
+}
+
+output "dns_records" {
+  value = [
+    for record in google_cloud_run_domain_mapping.default.status[0].resource_records:
+      lookup(record, "rrdata", "none")
   ]
 }

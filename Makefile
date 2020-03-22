@@ -13,36 +13,41 @@ local:
 	nohup sleep 2 && open http://localhost:4000 &
 	bundle exec jekyll serve --watch -s site
 
-infrastructure-aws:
-	make -C infrastructure-aws
+infrastructure-s3:
+	make -C infrastructure/aws-s3 infrastructure
 
-infrastructure-gcp:
-	make -C infrastructure-gcp
+infrastructure-gcs:
+	make -C infrastructure/gcp-gcs infrastructure
 
-publish-container:
-	$(eval PROJECT := $(shell sh infrastructure-gcp-cloudrun/project-id.sh | jq -r '.project'))
+infrastructure-cloudrun:
+	make -C infrastructure/gcp-cloudrun infrastructure
+
+publish-cloudrun:
+	$(eval PROJECT := $(shell sh infrastructure/gcp-cloudrun/project-id.sh | jq -r '.project'))
 	bundle exec jekyll build -s site
 	cp -r _site container/site
-	docker build -t "gcr.io/${PROJECT}/hwsh" container/
-	docker push "gcr.io/${PROJECT}/hwsh"
+	gcloud builds submit --tag="gcr.io/${PROJECT}/hwsh" container/
 	gcloud beta run deploy --platform=managed --region=europe-west4 --image="gcr.io/${PROJECT}/hwsh" --allow-unauthenticated hwsh-blog-service
 
-publish-aws:
-	$(eval BUCKET := $(shell sceptre --output json --dir infrastructure list outputs stamer/page | jq -r '.[] | ."stamer/page"[] | select(.OutputKey=="Bucket").OutputValue'))
-	bundle exec jekyll build -s site
+publish-s3:
+	BUCKET := $(shell sceptre --output json --dir infrastructure list outputs stamer/page | jq -r '.[] | ."stamer/page"[] | select(.OutputKey=="Bucket").OutputValue')
+	jekyll build -s site
 	cd _site && aws s3 sync . "s3://${BUCKET}"
 
-publish-gcp:
+publish-gcs:
 	$(eval BUCKET := $(shell cd infrastructure && tf output -json | jq -r '.bucket.value'))
 	bundle exec jekyll build -s site
 	cd _site && gsutil -m rsync -r -d . "gs://$(BUCKET)"
 
 clean:
+	rm -rf infrastructure/*/.terraform
 	rm -rf _site
+	rm -rf vendor
+	rm -rf .bundle
 	rm -rf .sass-cache
 	rm -rf .tweet-cache
 	rm -rf container/site
 	rm -rf nohup.out
 
-.PHONY: all init local infrastructure-gcp infrastructure-aws publish clean post
+.PHONY: all init local infrastructure-gcp infrastructure-aws infrastructure-cloudrun publish-cloudrub publish-gcs publis-s3 clean post
 

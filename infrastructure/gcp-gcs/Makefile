@@ -6,4 +6,3 @@ infrastructure:
 	tf apply
 
 .PHONY: admin-bucket infrastructure
-
