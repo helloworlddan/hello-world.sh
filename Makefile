@@ -19,6 +19,14 @@ infrastructure-aws:
 infrastructure-gcp:
 	make -C infrastructure-gcp
 
+publish-container:
+	$(eval PROJECT := $(shell sh infrastructure-gcp-cloudrun/project-id.sh | jq -r '.project'))
+	bundle exec jekyll build -s site
+	cp -r _site container/site
+	docker build -t "gcr.io/${PROJECT}/hwsh" container/
+	docker push "gcr.io/${PROJECT}/hwsh"
+	gcloud beta run deploy --platform=managed --region=europe-west4 --image="gcr.io/${PROJECT}/hwsh" --allow-unauthenticated hwsh-blog-service
+
 publish-aws:
 	$(eval BUCKET := $(shell sceptre --output json --dir infrastructure list outputs stamer/page | jq -r '.[] | ."stamer/page"[] | select(.OutputKey=="Bucket").OutputValue'))
 	bundle exec jekyll build -s site
@@ -33,6 +41,7 @@ clean:
 	rm -rf _site
 	rm -rf .sass-cache
 	rm -rf .tweet-cache
+	rm -rf container/site
 	rm -rf nohup.out
 
 .PHONY: all init local infrastructure-gcp infrastructure-aws publish clean post
