@@ -29,6 +29,8 @@ func main() {
 		log.Fatal(err)
 	}
 	trace.RegisterExporter(exporter)
+	exporter.StartMetricsExporter()
+	defer exporter.StopMetricsExporter()
 	trace.ApplyConfig(trace.Config{DefaultSampler: trace.AlwaysSample()})
 	_, span := trace.StartSpan(context.Background(), "main")
 	defer span.End()
