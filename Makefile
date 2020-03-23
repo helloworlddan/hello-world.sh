@@ -43,6 +43,7 @@ publish-gcs:
 
 clean:
 	rm -rf infrastructure/*/.terraform
+	rm -rf container/go.sum
 	rm -rf _site
 	rm -rf vendor
 	rm -rf .bundle
