@@ -10,7 +10,7 @@ post:
 	touch "site/assets/images/${TITLE}/asset.png"
 
 local:
-	bundle exec jekyll serve --watch -s site
+	bundle exec jekyll serve --watch -s site --port 3000
 
 build:
 	bundle exec jekyll build -s site
