@@ -1,7 +1,7 @@
 DATE := $(shell date +%Y-%m-%d)
 
 init:
-	bundle install --deployment
+	bundle install
 
 post:
 	git co -B "post/${TITLE}"
@@ -14,12 +14,7 @@ local:
 
 build:
 	bundle exec jekyll build -s site
-
-infrastructure-s3:
-	make -C infrastructure/aws-s3 infrastructure
-
-infrastructure-gcs:
-	make -C infrastructure/gcp-gcs infrastructure
+	cp static/* _site/
 
 infrastructure-cloudrun:
 	make -C infrastructure/gcp-cloudrun infrastructure
@@ -27,19 +22,10 @@ infrastructure-cloudrun:
 publish-cloudrun:
 	$(eval PROJECT := $(shell sh infrastructure/gcp-cloudrun/project-id.sh | jq -r '.project'))
 	bundle exec jekyll build -s site
+	cp static/* _site/
 	cp -r _site container/site
 	gcloud builds submit --tag="gcr.io/${PROJECT}/hwsh" container/
 	gcloud beta run deploy --platform=managed --region=europe-west4 --image="gcr.io/${PROJECT}/hwsh" --allow-unauthenticated hwsh-blog-service
-
-publish-s3:
-	BUCKET := $(shell sceptre --output json --dir infrastructure list outputs stamer/page | jq -r '.[] | ."stamer/page"[] | select(.OutputKey=="Bucket").OutputValue')
-	jekyll build -s site
-	cd _site && aws s3 sync . "s3://${BUCKET}"
-
-publish-gcs:
-	$(eval BUCKET := $(shell cd infrastructure && tf output -json | jq -r '.bucket.value'))
-	bundle exec jekyll build -s site
-	cd _site && gsutil -m rsync -r -d . "gs://$(BUCKET)"
 
 clean:
 	rm -rf infrastructure/*/.terraform
@@ -49,6 +35,7 @@ clean:
 	rm -rf .bundle
 	rm -rf .sass-cache
 	rm -rf .tweet-cache
+	rm -rf site/.jekyll-cache
 	rm -rf container/site
 	rm -rf nohup.out
 
