@@ -34,7 +34,8 @@ provider "google" {
 }
 
 resource "google_service_account" "terraform" {
-  account_id   = "\${local.prefix}-terraform-sa"
+  project      = local.project
+  account_id   = "\${local.prefix}-tf-sa"
   display_name = "\${local.prefix} Terraform"
 }
 
