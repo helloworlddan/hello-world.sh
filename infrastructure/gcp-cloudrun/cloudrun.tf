@@ -1,3 +1,9 @@
+resource "google_service_account" "default" {
+  project      = local.project
+  account_id   = "blog-sa"
+  display_name = "Blog Service Account"
+}
+
 resource "google_cloud_run_service" "default" {
   provider = google-beta
   project = local.project
@@ -9,6 +15,7 @@ resource "google_cloud_run_service" "default" {
       namespace = local.project
     }
     spec {
+      service_account_name = google_service_account.default.email
       containers {
         image = "gcr.io/${local.project}/hwsh"
         resources {

@@ -2,8 +2,8 @@ admin-bucket:
 	gsutil mb gs://hwsh-blog-admin
 
 infrastructure:
-	tf init
-	tf apply
+	terraform init
+	terraform apply
 
 .PHONY: admin-bucket infrastructure
 
