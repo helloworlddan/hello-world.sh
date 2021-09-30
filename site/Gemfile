@@ -1,5 +1,7 @@
+source 'https://rubygems.org'
+
+gem 'jekyll'
 gem 'jekyll-twitter-plugin'
 gem 'rouge'
 gem 'kramdown'
 gem 'jekyll-watch'
-source 'https://rubygems.org'

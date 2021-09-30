@@ -1,7 +1,3 @@
-.DS_Store
-_site
-.sass/cache
-.tweet-cache
-vendor
-.bundle
+dist
 **/.terraform
+**/.terraform.lock.hcl

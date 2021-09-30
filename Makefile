@@ -1,43 +1,28 @@
-DATE := $(shell date +%Y-%m-%d)
-
 init:
-	bundle install
-
-post:
-	git co -B "post/${TITLE}"
-	sed -E ``s/1970-01-01/${DATE}/'' "site/_templates/1970-01-01-template.markdown" > "site/_posts/${DATE}-${TITLE}.markdown"
-	mkdir -p "site/assets/images/${TITLE}"
-	touch "site/assets/images/${TITLE}/asset.png"
+	make -C site init
 
 local:
-	bundle exec jekyll serve --watch -s site --port 5000
+	make -C site local
 
 build:
-	bundle exec jekyll build -s site
-	cp static/* _site/
+	make -C site build
+	cp static/* dist/
 
-infrastructure-cloudrun:
-	make -C infrastructure/gcp-cloudrun infrastructure
+post:
+	make -C site post
 
-publish-cloudrun:
-	$(eval PROJECT := $(shell sh infrastructure/gcp-cloudrun/project-id.sh | jq -r '.project'))
-	bundle exec jekyll build -s site
-	cp static/* _site/
-	cp -r _site container/site
-	gcloud builds submit --tag="gcr.io/${PROJECT}/hwsh" container/
-	gcloud beta run deploy --platform=managed --region=europe-west4 --image="gcr.io/${PROJECT}/hwsh" --allow-unauthenticated hwsh-blog-service
+publish: build
+	cp -r ../dist ../container/site
+	gcloud builds submit --tag="gcr.io/$$(shell gcloud config get-value project)/hwsh" container/
+	gcloud run deploy --platform=managed --region=europe-west4 --image="gcr.io/$$(shell gcloud config get-value project)/hwsh" hwsh-blog-service
+
+deploy:
+	make -C infrastructure init deploy
 
 clean:
-	rm -rf infrastructure/*/.terraform
-	rm -rf container/go.sum
-	rm -rf _site
-	rm -rf vendor
-	rm -rf .bundle
-	rm -rf .sass-cache
-	rm -rf .tweet-cache
-	rm -rf site/.jekyll-cache
-	rm -rf container/site
-	rm -rf nohup.out
+	make -C site clean
+	make -C infrastructure clean
+	rm -rf dist
 
-.PHONY: all init local infrastructure-cloudrun publish-cloudrun clean post
+.PHONY: init local build post publish deploy clean
 

@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket  = "hwsh-blog-admin"
-    prefix  = "terraform/state"
+    bucket = "hwsh-blog-admin"
+    prefix = "terraform/state"
   }
 }
 
@@ -11,8 +11,4 @@ provider "google-beta" {
 
 provider "google" {
   region = local.region
-}
-
-data "external" "project" {
-  program = ["sh", "project-id.sh"]
 }
