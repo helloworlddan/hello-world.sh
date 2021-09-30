@@ -1,6 +1,3 @@
-init:
-	make -C site init
-
 local:
 	make -C site local
 
@@ -17,12 +14,15 @@ publish: build
 	gcloud run deploy --platform=managed --region=europe-west4 --image="gcr.io/$$(shell gcloud config get-value project)/hwsh" hwsh-blog-service
 
 deploy:
-	make -C infrastructure init deploy
+	make -C infrastructure deploy
+
+destroy:
+	make -C infrastructure destroy
 
 clean:
 	make -C site clean
 	make -C infrastructure clean
 	rm -rf dist
 
-.PHONY: init local build post publish deploy clean
+.PHONY: init local build post publish deploy clean destroy
 
