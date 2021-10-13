@@ -1,6 +1,6 @@
 /* =Base */
 body {
-    font-family: 'Inconsolata', ;
+    font-family: 'JetBrains Mono', ;
     color: $iron;
     background-color: $dorian;
 }
@@ -16,7 +16,7 @@ a {
 }
 
 p {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 32px;
 }
 
@@ -39,7 +39,7 @@ blockquote {
     footer {
         position: absolute;
         bottom: -35px;
-        font-size: 15px;
+        font-size: 13px;
         color: $iron;
         letter-spacing: 0px;
         left:0px;
@@ -51,7 +51,7 @@ blockquote {
 
     p {
         display: inline;
-        font-size: 20px;
+        font-size: 18px;
         color: $cloudy;
         font-weight: 400;
         &:before { content: "“ "; }
@@ -78,7 +78,7 @@ strong {
 }
 
 .logo {
-    font-size: 25px;
+    font-size: 23px;
     font-weight: 600;
     color: $iron;
     display: block;
@@ -86,7 +86,7 @@ strong {
 
 .menu {
     color: $cloudy;
-    font-size: 18px;
+    font-size: 16px;
     margin:0px;
     margin-top: 6px;
     padding: 0px;
@@ -127,12 +127,12 @@ strong {
 
 .page-title__text {
     font-weight: 600;
-    font-size: 55px;
+    font-size: 40px;
 }
 
 .page-title__subtitle {
     font-weight: 400;
-    font-size: 22px;
+    font-size: 20px;
     color: $cloudy;
 }
 
@@ -142,11 +142,11 @@ strong {
 }
 
 .post-title__text {
-    font-size: 40px;
+    font-size: 36px;
 }
 
 .post-title__subtitle {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /* =Post teasers */
@@ -162,19 +162,19 @@ strong {
 }
 
 .post-teaser__title {
-    font-size: 22px;
+    font-size: 20px;
     color: $iron;
 }
 
 .post-teaser__date {
-    font-size: 16px;
+    font-size: 14px;
     float: right;
     vertical-align: middle;
     color: $cloudy;
 }
 
 .empty-post-list {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: $iron;
     text-align: center;
@@ -188,12 +188,12 @@ strong {
 }
 
 .explore__devider {
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 8.18px;
 }
 
 .explore__label {
-    font-size: 14px;
+    font-size: 12px;
     margin-top: 15px;
 }
 
@@ -206,7 +206,7 @@ strong {
 .categories__item {
     display: inline-block;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .categories__item a {
@@ -234,13 +234,13 @@ strong {
 }
 
 .about__devider {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 50px;
     letter-spacing: 9.09px;
 }
 
 .about__text {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 #disqus_thread {
@@ -250,7 +250,7 @@ strong {
 @media (max-width: 800px) {
     /* =Base */
     p {
-        font-size: 16px;
+        font-size: 14px;
         line-height: 1.6;
     }
 
@@ -264,7 +264,7 @@ strong {
     }
 
     .social-links {
-        font-size: 30px;
+        font-size: 28px;
         margin-top: 35px;
     }
 
@@ -274,20 +274,20 @@ strong {
     }
 
     .page-title__text {
-        font-size: 40px;
+        font-size: 36px;
     }
 
     .page-title__subtitle {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .post-teaser__title {
-        font-size: 18px;
+        font-size: 16px;
         @include centered-block();
     }
 
     .post-teaser__date {
-        font-size: 16px;
+        font-size: 14px;
         margin-top: 10px;
         float: none;
         @include centered-block();
@@ -298,10 +298,10 @@ strong {
     }
 
     .post-title__text {
-        font-size: 28px;
+        font-size: 26px;
     }
 
     .post-title__subtitle {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
