@@ -78,3 +78,10 @@ resource "google_service_account_iam_member" "default-sa-user" {
   member             = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
 }
 
+
+resource "google_project_iam_member" "build-build" {
+  provider           = google-beta
+  project            = local.project
+  role               = "roles/cloudbuild.serviceAgent"
+  member             = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
+}
