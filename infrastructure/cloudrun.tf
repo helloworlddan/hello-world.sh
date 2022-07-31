@@ -54,3 +54,27 @@ resource "google_cloud_run_service_iam_binding" "public" {
     "allUsers"
   ]
 }
+
+resource "google_cloudbuild_trigger" "default" {
+  project  = local.project
+  provider = google-beta
+  github {
+    name  = local.repo
+    owner = local.repo_owner
+    push {
+      branch = local.branch
+    }
+  }
+  name        = "${local.prefix}-trigger"
+  description = "Build pipeline for ${local.prefix}-service"
+  filename    = "container/cloudbuild.yaml"
+}
+
+# Allow Cloud Build to bind SA
+resource "google_service_account_iam_member" "default-sa-user" {
+  provider           = google-beta
+  service_account_id = google_service_account.default.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
+}
+

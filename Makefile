@@ -3,7 +3,6 @@ local:
 
 build:
 	make -C site build
-	cp static/* dist/
 
 post:
 	make -C site post
@@ -11,7 +10,7 @@ post:
 publish: build
 	cp -r dist container/site
 	gcloud builds submit --tag="gcr.io/$$(gcloud config get-value project)/hwsh" container/
-	gcloud run deploy --platform=managed --region=europe-west4 --image="gcr.io/$$(gcloud config get-value project)/hwsh" hwsh-blog-service
+	gcloud run deploy --region=europe-west4 --image="gcr.io/$$(gcloud config get-value project)/hwsh" hwsh-blog-service
 
 deploy:
 	make -C infrastructure deploy
