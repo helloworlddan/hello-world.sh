@@ -65,6 +65,9 @@ resource "google_cloudbuild_trigger" "default" {
       branch = local.branch
     }
   }
+  substitutions = {
+    _REGION      = local.region
+  }
   name        = "${local.prefix}-trigger"
   description = "Build pipeline for ${local.prefix}-service"
   filename    = "container/cloudbuild.yaml"
