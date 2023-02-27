@@ -14,14 +14,14 @@ img { margin: 40px auto; display: block; background-color: #ffffff; max-width: 1
 
 .header { overflow: hidden; }
 
-.social-link { color: #424242; }
+.social-link { color: #333333; }
 
-.social-links { float: right; font-size: 26px; color: #828282; list-style-type: none; }
+.social-links { font-size: 26px; color: #828282; list-style-type: none; padding-right: 40px; }
 
-.social-links__entry { display: inline-block; margin-left: 10px; }
+.social-links__entry { display: inline-block; margin: 10px; }
 
 /* =Titles */
-.page-title { margin-top: 10px; margin-bottom: 100px; text-align: center; }
+.page-title { margin-top: 10px; margin-bottom: 80px; text-align: center; }
 
 .page-title__text { font-weight: 600; font-size: 40px; }
 
