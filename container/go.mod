@@ -1,3 +1,3 @@
-module main
+module github.com/helloworlddan/hello-world.sh
 
-go 1.14
+go 1.19
