@@ -1,18 +1,4 @@
 steps:
-  - name: 'ruby'
-    entrypoint: 'bash'
-    args:
-    - '-eEuo'
-    - 'pipefail'
-    - '-c'
-    - |-
-      cd site/
-      bundle install
-      bundle exec jekyll build -d ../dist
-      rm ../dist/Makefile
-      cd ..
-      cp -r dist container/site
-
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/hwsh', 'container/']
   - name: 'gcr.io/cloud-builders/docker'

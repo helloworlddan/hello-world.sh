@@ -13,4 +13,3 @@ clean:
 	rm -rf .terraform.lock.hcl
 
 .PHONY: init deploy destroy
-

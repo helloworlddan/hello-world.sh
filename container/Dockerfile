@@ -1,14 +1,11 @@
-# build stage
-FROM golang AS build-env
-WORKDIR /src/
-ADD go.mod /src/
-ADD server.go /src/
-RUN cd /src && CGO_ENABLED=0 GOOS=linux GOARCH=amd64  go build -tags netgo -a -installsuffix cgo -o server
+FROM golang:1.19-bullseye as builder
+WORKDIR /app
+COPY go.* ./
+RUN go mod download
+COPY server.go ./
+RUN CGO_ENABLED=0  go build -v -o server
 
-# final stage
-FROM alpine
-RUN apk add --no-cache ca-certificates
-WORKDIR /app/
-COPY --from=build-env /src/server /app/
+FROM gcr.io/distroless/static
+COPY --from=builder /app/server /app/server
 ADD ./site /app/site/
-ENTRYPOINT /app/server
+CMD ["/app/server"] 
