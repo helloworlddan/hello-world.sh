@@ -14,6 +14,26 @@
     <link rel="stylesheet" href="./static/main.css">
 
     <script src="https://kit.fontawesome.com/d14098e0b8.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+    fetch("/joke")
+      .then(
+        response => response.text()
+      ).then(
+        text => {
+          console.log(text);
+          const interval = setInterval(() => {
+            document.getElementById("laugh").innerHTML += text[0];
+            text = text.slice(1);
+
+            if (!text.length) {
+              clearInterval(interval);
+            }
+          }, 35);
+        }
+      );
+
+    </script>
 </head>
 
 <body>
@@ -44,12 +64,15 @@
 
         <h1>Hi There</h1>
 
-        <p>My name is Daniel and I am a software engineer that works mainly with automation and infrastructure as code.
-            I put up this site to talk about cloud stuff, I guess.</p>
+        <p>My name is Daniel! I am a cloud engineer at Google. I work a lot on building modern application architectures in the cloud. Reach out to me if you want to talk 🧉</p>
 
         <h1>Hints</h1>
 
-        <p>All views and opinions expressed on this site are entirely my own.</p>
+        <p>All views and opinions expressed are really always entirely my own.</p>
+
+        <h1>Laugh a Little</h1>
+
+        <p id="laugh"></p>
 
         <div class="explore">
             <a href="/key/hello-world"><div class="explore__divider">EDAC0E3FCB1B3FEB</div></a>
