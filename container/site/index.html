@@ -22,14 +22,16 @@
       ).then(
         text => {
           console.log(text);
+          text = text.replaceAll("\n", " <br/> ");
+          let words = text.split(" ");
           const interval = setInterval(() => {
-            document.getElementById("laugh").innerHTML += text[0];
-            text = text.slice(1);
+            document.getElementById("tortune").innerHTML += words[0] + " ";
+            words = words.slice(1);
 
-            if (!text.length) {
+            if (words.length == 0) {
               clearInterval(interval);
             }
-          }, 35);
+          }, 100);
         }
       );
 
@@ -70,9 +72,9 @@
 
         <p>All views and opinions expressed are really always entirely my own.</p>
 
-        <h1>Laugh a Little</h1>
+        <h1>Have a Tortune Cookie</h1>
 
-        <p id="laugh"></p>
+        <p id="tortune"></p>
 
         <div class="explore">
             <a href="/key/hello-world"><div class="explore__divider">EDAC0E3FCB1B3FEB</div></a>

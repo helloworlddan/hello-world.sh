@@ -7,6 +7,10 @@ a { color: #333333; font-weight: bold; text-decoration: none; }
 
 p { font-size: 18px; line-height: 32px; }
 
+.tortune { white-space: pre-wrap; }
+
+.laugh { white-space: pre-wrap; }
+
 img { margin: 40px auto; display: block; background-color: #ffffff; max-width: 100%; }
 
 /* =Header */
