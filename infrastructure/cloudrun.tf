@@ -66,7 +66,7 @@ resource "google_cloudbuild_trigger" "default" {
     }
   }
   substitutions = {
-    _REGION      = local.region
+    _REGION = local.region
   }
   name        = "${local.prefix}-trigger"
   description = "Build pipeline for ${local.prefix}-service"
@@ -82,15 +82,16 @@ resource "google_service_account_iam_member" "default-sa-user" {
 }
 
 resource "google_project_iam_member" "build-build" {
-  provider           = google-beta
-  project            = local.project
-  role               = "roles/cloudbuild.serviceAgent"
-  member             = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
+  provider = google-beta
+  project  = local.project
+  role     = "roles/cloudbuild.serviceAgent"
+  member   = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
 }
 
 resource "google_project_iam_member" "build-run" {
-  provider           = google-beta
-  project            = local.project
-  role               = "roles/run.admin"
-  member             = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
+  provider = google-beta
+  project  = local.project
+  role     = "roles/run.admin"
+  member   = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
 }
+
