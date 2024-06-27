@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
-	"os"
 
+	"github.com/helloworlddan/run"
 	"github.com/helloworlddan/tortune/tortune"
 )
 
@@ -52,13 +51,8 @@ func main() {
 		})
 	}
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	err := http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
+	err := run.ServeHTTP(nil, nil)
 	if err != nil {
-		log.Fatal(err)
+		run.Fatal(nil, err)
 	}
 }
