@@ -2,7 +2,6 @@
 
 source $HOME/.bash_profile
 
-guser     dan@hello-world.sh
-gproject  blog-271621
-gregion   europe-west4
-
+guser dan@hello-world.sh
+gproject hwsh-site
+gregion europe-north1
