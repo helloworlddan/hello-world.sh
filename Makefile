@@ -11,6 +11,10 @@ init:
 	gcloud projects add-iam-policy-binding $$(gcloud config get-value project) \
 		--member "serviceAccount:hwshsa@$$(gcloud config get-value project).iam.gserviceaccount.com" \
 		--role "roles/datastore.user"
+	gcloud alpha resource-manager liens create \
+    --project "$$(gcloud config get-value project)" \
+    --restrictions resourcemanager.projects.delete \
+    --reason "protected site project"
 
 build:
 	gcloud builds submit --tag="gcr.io/$$(gcloud config get-value project)/image" .
