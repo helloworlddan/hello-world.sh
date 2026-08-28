@@ -1,11 +1,10 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"net/http"
+	"strings"
 
-	"cloud.google.com/go/firestore"
 	"github.com/helloworlddan/run"
 	"github.com/helloworlddan/tortune/tortune"
 )
@@ -15,51 +14,38 @@ type Link struct {
 }
 
 func main() {
-	ctx := context.Background()
+	for _, endpoint := range []string{"contact", "card"} {
+		http.HandleFunc(
+			fmt.Sprintf("GET /%s", endpoint),
+			func(w http.ResponseWriter, r *http.Request) {
+				vcardLines := []string{
+					"BEGIN:VCARD",
+					"VERSION:3.0",
+					"N:Stamer;Daniel;;;",
+					"FN:Daniel Stamer",
+					"PRONOUNS;LANGUAGE=en;PREF=1:he/her",
+					"PHOTO;PNG:https://hello-world.sh/static/avatar.png",
+					"KEY;PGP:https://hello-world.sh/key/hello-world",
+					"ORG:Google;Forward Deployed Engineering",
+					"TITLE:Staff Software Engineer",
+					"TEL;TYPE=CELL,VOICE:+491736548706",
+					"EMAIL;TYPE=WORK:stamer@google.com",
+					"EMAIL;TYPE=HOME:dan@hello-world.sh",
+					"URL:https://hello-world.sh",
+					"ADR;TYPE=WORK:;;ABC-Str. 19;Hamburg;Hamburg;20354;Germany",
+					"END:VCARD",
+					"",
+				}
+				vcardData := strings.Join(vcardLines, "\r\n")
 
-	// Lazy load FireStore client
-	var fsClient *firestore.Client
-	run.LazyClient("firestore", func() {
-		var err error
-		fsClient, err = firestore.NewClient(ctx, run.ProjectID())
-		if err != nil {
-			run.Error(nil, err)
-		}
-		run.Client("firestore", fsClient)
-	})
+				w.Header().Set("Content-Type", "text/vcard; charset=utf-8")
+				w.Header().Set("Content-Disposition", `attachment; filename="daniel_stamer.vcf"`)
+				w.Header().Set("Content-Length", fmt.Sprintf("%d", len(vcardData)))
 
-	http.HandleFunc("GET /s/{token}", func(w http.ResponseWriter, r *http.Request) {
-		token := r.PathValue("token")
-		if token == "" {
-			run.Warning(r, "no token supplied")
-			http.Error(w, "no token supplied", http.StatusBadRequest)
-			return
-		}
-
-		var fsClient *firestore.Client
-		fsClient, err := run.UseClient("firestore", fsClient)
-		if err != nil {
-			run.Warningf(r, "can't connect to database: %v", err)
-			http.Error(w, "can't connect to database", http.StatusInternalServerError)
-			return
-		}
-		docSnap, err := fsClient.Collection("links").Doc(token).Get(ctx)
-		if err != nil {
-			run.Warning(r, "token not found")
-			http.Error(w, "token not found", http.StatusNotFound)
-			return
-		}
-
-		var link Link
-		err = docSnap.DataTo(&link)
-		if err != nil {
-			run.Warning(r, "bad data entry")
-			http.Error(w, "bad data entry", http.StatusInternalServerError)
-			return
-		}
-
-		http.Redirect(w, r, link.RedirectURL, http.StatusMovedPermanently)
-	})
+				w.Write([]byte(vcardData))
+			},
+		)
+	}
 
 	for _, endpoint := range []string{"mail", "post"} {
 		http.HandleFunc(

@@ -2,7 +2,7 @@ FROM golang:1.25-trixie as builder
 WORKDIR /app
 COPY go.* ./
 RUN go mod download
-COPY server.go ./
+COPY main.go ./
 RUN CGO_ENABLED=0 go build -v -o server
 
 FROM gcr.io/distroless/static
