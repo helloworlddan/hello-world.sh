@@ -1,4 +1,4 @@
-FROM golang:1.25-trixie as builder
+FROM golang:1.27-trixie AS builder
 WORKDIR /app
 COPY go.* ./
 RUN go mod download
