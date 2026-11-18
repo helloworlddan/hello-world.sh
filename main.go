@@ -84,6 +84,16 @@ func main() {
 		)
 	}
 
+	for _, endpoint := range []string{"feedback"} {
+		http.Handle(
+			fmt.Sprintf("GET /%s", endpoint),
+			http.RedirectHandler(
+				"https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				http.StatusSeeOther,
+			),
+		)
+	}
+
 	for _, endpoint := range []string{"joke", "laugh", "fun", "tortune"} {
 		http.HandleFunc(
 			fmt.Sprintf("GET /%s", endpoint),
